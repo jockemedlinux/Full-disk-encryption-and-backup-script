@@ -28,7 +28,7 @@ pv -tpreb $fs | dd of=$dir/$fop bs=200M conv=noerror iflag=fullblock
 sleep 5
 findsize=`ls $dir/$fop -lhS | awk '{print $5}'`
 
-
+#Calculates sektors and sizes
 ##############################################################################
 losetup -f -P $dir/$fop
 echo "$pw" | cryptsetup open $loopdev box
@@ -45,7 +45,6 @@ partend=`expr $startsize + $minsizeconv + $cryptconv`
 truncsize=`expr $partend \* 512`
 
 ##############################################################################
-
 echo ""
 echo -e "[*] r2fs blocksize:\t\t$blocksize\t\t[4K blocks]"
 echo -e "[*] Filesystem minsize:\t\t$minsize\t\t[4K blocks]"
@@ -60,7 +59,6 @@ echo -e "[*] Truncsize:\t\t\t$truncsize\t[bytes]"
 echo ""
 
 #############################################################################
-
 e2fsck -fy $cryptdev
 resize2fs -Mfp $cryptdev
 cryptsetup close box
@@ -70,12 +68,10 @@ echo "[*] Truncating image file."
 truncate --size=$truncsize $dir/$fop
 findsizen=`ls $dir/$fop -lhS | awk '{print $5}'`
 
-echo "[*] Restarting services"
-echo ""
+#############################################################################
 echo -e "[*] Backup is complete."
 echo -e "[*] System is restored."
 echo -e "[*] Old image size:\t$findsize"
 echo -e "[*] New image size:\t$findsizen"
 echo -e "[*] BYE!"
 echo ""
-############################################################################
