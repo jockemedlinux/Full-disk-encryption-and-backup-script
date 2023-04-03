@@ -1,5 +1,6 @@
 # FDE-and-Backup
 #### Create a Full disk encrypted OS on an SD-card for a raspberry pi with corresponding backupscript. The way I do it.
+#### The backupscript truncates the image file to smallest possible size.
 
 tldr;
 ```
